@@ -97,6 +97,26 @@
                 font-size: 1em;
             }
         }
+
+        #alphabetList {
+            margin: 20px 0;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #alphabetList li {
+            display: inline;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #alphabetList li:hover {
+            background-color: #ddd;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -105,6 +125,7 @@
         <h1 id="word">Press Start to Begin</h1>
         <p id="meaning"></p>
     </div>
+    <ul id="alphabetList"></ul>
     <div id="controls">
         <button id="prevButton" disabled>Previous</button>
         <button id="toggleButton">Start</button>
@@ -126,12 +147,12 @@
     <script>
         let currentWordIndex = 0;
         let isPaused = true;
+        let filteredWords = [];
+        let currentLetterIndex = 0; // To track the current letter index
+        const alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A-Z
         const speechRate = 1.0; // Constant speech rate
-
-        // Words data
-        const words = 
-        [
-    {"word": "abate", "meaning": "to become less active, less intense, or less in amount"},
+        const words = [
+{"word": "abate", "meaning": "to become less active, less intense, or less in amount"},
     {"word": "abstract", "meaning": "existing purely in the mind; not representing actual reality"},
     {"word": "abysmal", "meaning": "extremely bad"},
     {"word": "accord", "meaning": "to be in agreement"},
@@ -704,113 +725,138 @@
     {"word": "voracious", "meaning": "wanting or devouring great quantities of food"},
     {"word": "vulnerable", "meaning": "susceptible to physical or emotional attack or harm"},
     {"word": "wane", "meaning": "decrease in vigor, power, or extent; become weaker"},
-    {"word": "wary", "meaning": "feeling or showing caution about possible dangers or problems"},
-    {"word": "whimsical", "meaning": "playfully quaint or fanciful, especially in an appealing and amusing way"},
-    {"word": "wily", "meaning": "skilled at gaining an advantage, especially deceitfully"},
-    {"word": "wistful", "meaning": "having or showing a feeling of vague or regretful longing"},
-    {"word": "zealous", "meaning": "having or showing zeal"}
-
-
+            { "word": "wary", "meaning": "feeling or showing caution about possible dangers or problems" },
+            { "word": "whimsical", "meaning": "playfully quaint or fanciful, especially in an appealing and amusing way" },
+            { "word": "wily", "meaning": "skilled at gaining an advantage, especially deceitfully" },
+            { "word": "wistful", "meaning": "having or showing a feeling of vague or regretful longing" },
+            { "word": "zealous", "meaning": "having or showing zeal" }
         ];
 
-        // Update word display
         function updateWordDisplay(word, meaning) {
             document.getElementById('word').textContent = word;
             document.getElementById('meaning').textContent = meaning;
         }
 
-        // Text-to-speech function
         function speak(text, onEndCallback) {
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.voice = speechSynthesis.getVoices().find(voice => voice.name.includes('Google US English')); // Change to a more understandable voice
-            utterance.rate = speechRate; // Constant speech rate
-            utterance.pitch = 1.2; // Increase pitch for more clarity
+            const voices = speechSynthesis.getVoices();
+            const voice = voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+            utterance.voice = voice;
+            utterance.rate = speechRate;
+            utterance.pitch = 1.2;
 
-            // Event listener to detect end of speech
             utterance.onend = function () {
                 if (onEndCallback) {
-                    onEndCallback(); // Call the callback function when speech ends
+                    onEndCallback();
                 }
             };
 
-            speechSynthesis.cancel(); // Stop any ongoing speech
+            speechSynthesis.cancel();
             speechSynthesis.speak(utterance);
         }
 
-        // Function to display the current word
         function displayCurrentWord() {
-            const currentWord = words[currentWordIndex];
+            const currentWord = filteredWords[currentWordIndex];
             if (currentWord) {
                 updateWordDisplay(currentWord.word, currentWord.meaning);
                 speak(`${currentWord.word}. ${currentWord.meaning}`, () => {
                     if (!isPaused) {
-                        nextWord(); // Move to the next word automatically when speech ends
+                        nextWord();
                     }
                 });
             }
         }
 
-        // Move to the next word
         function nextWord() {
-            currentWordIndex = (currentWordIndex + 1) % words.length; // Loop back to the start
-            displayCurrentWord();
-        }
-
-        // Move to the previous word
-        function prevWord() {
-            currentWordIndex = (currentWordIndex - 1 + words.length) % words.length; // Loop to the end if at start
-            displayCurrentWord();
-        }
-
-        // Main function to run the word reader
-        function runWordReader() {
-            if (words.length === 0) {
-                return; // Exit if no words were loaded
+            currentWordIndex = (currentWordIndex + 1) % filteredWords.length;
+            if (currentWordIndex === 0) { // If reached the end of the current letter's words
+                moveToNextLetter();
+            } else {
+                displayCurrentWord();
             }
+        }
 
-            // Initial display and speech
+        function prevWord() {
+            currentWordIndex = (currentWordIndex - 1 + filteredWords.length) % filteredWords.length;
             displayCurrentWord();
         }
 
-        // Pause, resume, or start reading
+        function runWordReader() {
+            if (filteredWords.length === 0) {
+                return;
+            }
+            displayCurrentWord();
+        }
+
+        function moveToNextLetter() {
+            currentLetterIndex = (currentLetterIndex + 1) % alphabet.length;
+            filterWordsByLetter(alphabet[currentLetterIndex]);
+        }
+
+        function populateAlphabetList() {
+            const alphabetList = document.getElementById('alphabetList');
+            alphabetList.innerHTML = ''; // Clear existing list
+            alphabet.forEach(letter => {
+                const listItem = document.createElement('li');
+                listItem.textContent = letter;
+                listItem.addEventListener('click', () => {
+                    currentLetterIndex = alphabet.indexOf(letter); // Update currentLetterIndex
+                    filterWordsByLetter(letter);
+                });
+                alphabetList.appendChild(listItem);
+            });
+        }
+
+        function filterWordsByLetter(letter) {
+            filteredWords = words.filter(word => word.word.toLowerCase().startsWith(letter.toLowerCase()));
+            currentWordIndex = 0;
+            if (filteredWords.length > 0) {
+                document.getElementById('prevButton').disabled = false;
+                document.getElementById('nextButton').disabled = false;
+                updateWordDisplay('', ''); // Clear display while filtering
+                runWordReader();
+            } else {
+                updateWordDisplay('No words', 'No words available for this letter');
+                document.getElementById('prevButton').disabled = true;
+                document.getElementById('nextButton').disabled = true;
+            }
+        }
+
         document.getElementById('toggleButton').addEventListener('click', () => {
             if (isPaused) {
                 if (document.getElementById('toggleButton').textContent === 'Start') {
-                    document.getElementById('prevButton').disabled = false;
-                    document.getElementById('nextButton').disabled = false;
+                    populateAlphabetList(); // Populate the alphabet list when starting
                 }
                 isPaused = false;
                 document.getElementById('toggleButton').textContent = 'Pause';
-                runWordReader(); // Start or resume reading
+                if (filteredWords.length > 0) {
+                    runWordReader();
+                }
             } else {
                 isPaused = true;
                 document.getElementById('toggleButton').textContent = 'Resume';
-                speechSynthesis.cancel(); // Stop the speech immediately
-                clearInterval(wordInterval); // Stop the interval
+                speechSynthesis.cancel();
             }
         });
 
-        // Handle next and previous buttons
         document.getElementById('nextButton').addEventListener('click', () => {
-            isPaused = true; // Pause auto-progress
+            isPaused = true;
             document.getElementById('toggleButton').textContent = 'Resume';
-            speechSynthesis.cancel(); // Stop the speech immediately
+            speechSynthesis.cancel();
             nextWord();
         });
 
         document.getElementById('prevButton').addEventListener('click', () => {
-            isPaused = true; // Pause auto-progress
+            isPaused = true;
             document.getElementById('toggleButton').textContent = 'Resume';
-            speechSynthesis.cancel(); // Stop the speech immediately
+            speechSynthesis.cancel();
             prevWord();
         });
 
-        // Load voices asynchronously to ensure they are available
         window.speechSynthesis.onvoiceschanged = function () {
             const voices = speechSynthesis.getVoices();
-            console.log(voices); // Log available voices for debugging
+            console.log(voices);
         };
     </script>
-</body>
-
+</body
 </html>
