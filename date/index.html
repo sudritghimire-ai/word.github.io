@@ -8,80 +8,75 @@
 *{box-sizing:border-box}
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#261d21}
 body{
-  margin:0;min-height:100vh;padding:24px;
+  margin:0;min-height:100vh;padding:24px;display:grid;place-items:center;
   background:
     radial-gradient(circle at 10% 0%,rgba(255,210,222,.78),transparent 30%),
     radial-gradient(circle at 95% 100%,rgba(255,227,204,.72),transparent 32%),
-    linear-gradient(145deg,#fff9fa,#fff4f1);
+    linear-gradient(145deg,#fff9fa,#fff4f1)
 }
-.wrap{width:min(760px,100%);margin:38px auto}
 .card{
-  background:rgba(255,255,255,.94);border:1px solid #eedbe1;border-radius:30px;
-  padding:38px;box-shadow:0 26px 80px rgba(94,46,62,.13)
+  width:min(700px,100%);background:rgba(255,255,255,.95);
+  border:1px solid #eedbe1;border-radius:30px;padding:40px;
+  box-shadow:0 26px 80px rgba(94,46,62,.13)
 }
 .eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#a26577;font-weight:750;margin-bottom:14px}
-h1{font-size:clamp(2.5rem,7vw,4.7rem);letter-spacing:-.055em;line-height:.94;margin:0 0 18px}
-.lead{font-size:1.08rem;line-height:1.72;color:#705a63;margin:0}
+h1{font-size:clamp(2.7rem,8vw,5rem);letter-spacing:-.055em;line-height:.94;margin:0 0 20px}
+.lead{font-size:1.08rem;line-height:1.75;color:#705a63;margin:0}
 .story{
   margin:30px 0;padding:22px 24px;border-radius:20px;
-  background:#fff8fa;border:1px solid #f0dfe4;color:#5d4a52;line-height:1.75
+  background:#fff8fa;border:1px solid #f0dfe4;color:#5d4a52;line-height:1.78
 }
 .story p{margin:0 0 12px}.story p:last-child{margin-bottom:0}
 .divider{height:1px;background:#f0dfe4;margin:30px 0}
-.q{margin:26px 0}
-.q h2{font-size:1rem;margin:0 0 12px}
-.hint{font-size:.84rem;color:#967f88;margin:-4px 0 12px}
-.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.q{margin:26px 0}.q h2{font-size:1.02rem;margin:0 0 13px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 label{cursor:pointer}
-label input[type=radio],label input[type=checkbox]{position:absolute;opacity:0;pointer-events:none}
+label input{position:absolute;opacity:0;pointer-events:none}
 .opt{
-  min-height:54px;display:flex;align-items:center;justify-content:center;text-align:center;
-  padding:13px 14px;border:1px solid #ead4dc;border-radius:16px;background:#fff;
-  transition:.17s ease
+  min-height:58px;display:flex;align-items:center;justify-content:center;
+  padding:14px;border:1px solid #ead4dc;border-radius:17px;background:#fff;
+  font-weight:650;transition:.17s ease
 }
 label:hover .opt{transform:translateY(-1px);border-color:#c65f7e}
 label input:checked+.opt{background:#ffe8ee;border-color:#b94e6d;box-shadow:0 0 0 3px rgba(185,78,109,.08)}
-input[type=date],input[type=time],select,textarea{
-  width:100%;border:1px solid #ead4dc;border-radius:15px;padding:14px;
-  background:#fff;font:inherit;color:#261d21;outline:none
+.calendar{
+  display:none;margin-top:24px;padding:24px;border-radius:21px;
+  background:#fffafb;border:1px solid #efdbe2
 }
-input:focus,select:focus,textarea:focus{border-color:#b94e6d;box-shadow:0 0 0 3px rgba(185,78,109,.08)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.date-panel{
-  display:none;margin-top:28px;padding:24px;border-radius:22px;
-  border:1px solid #efdbe2;background:#fffafb
-}
-.date-panel.show{display:block;animation:fade .24s ease}
+.calendar.show{display:block;animation:fade .22s ease}
 @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+input[type=date]{
+  width:100%;padding:15px;border:1px solid #ead4dc;border-radius:15px;
+  background:white;font:inherit;color:#261d21;outline:none
+}
+input[type=date]:focus{border-color:#b94e6d;box-shadow:0 0 0 3px rgba(185,78,109,.08)}
 button{
   width:100%;border:0;border-radius:17px;padding:16px 18px;margin-top:24px;
   background:#b84464;color:white;font:inherit;font-weight:760;cursor:pointer
 }
 button:hover{filter:brightness(.97);transform:translateY(-1px)}
 .note{font-size:.82rem;line-height:1.55;color:#907781;text-align:center;margin:12px 0 0}
-.soft{font-size:.88rem;color:#8b727b;line-height:1.6}
-@media(max-width:620px){
-  body{padding:14px}.wrap{margin:18px auto}.card{padding:26px 19px;border-radius:24px}
-  .choices,.grid{grid-template-columns:1fr}
+@media(max-width:600px){
+  body{padding:14px}.card{padding:27px 20px;border-radius:24px}.choices{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-<main class="wrap">
-<section class="card">
-  <div class="eyebrow">A small question, from a long way away</div>
+<main class="card">
+  <div class="eyebrow">A question I should have asked a long time ago</div>
   <h1>Third Grade.</h1>
+
   <p class="lead">
-    That's where I first knew there was something different about you, long before I even knew what to call it.
+    That's where it started for me — before I even knew what love was, I just knew you felt different.
   </p>
 
   <div class="story">
-    <p>We kept ending up in different sections, different rooms, different little versions of life. Somehow, I still kept looking your way.</p>
-    <p>Now we're far away from each other too. So I'm not asking for some huge promise. I just want to know if you'd want one real moment together — even if that moment begins through a screen.</p>
+    <p>We kept ending up in different sections, different rooms, and eventually different places in the world.</p>
+    <p>But after all these years, I don't want to keep wondering what could have happened. I just want to ask you simply.</p>
   </div>
 
   <form action="https://formsubmit.co/sudritghimire@gmail.com" method="POST">
-    <input type="hidden" name="_subject" value="♡ Third Grade — her answer">
+    <input type="hidden" name="_subject" value="♡ Third Grade — answer">
     <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_next" value="https://sudritghimire-ai.github.io/word.github.io/date/thanks.html">
     <input type="hidden" name="_url" value="https://sudritghimire-ai.github.io/word.github.io/date/">
@@ -90,78 +85,53 @@ button:hover{filter:brightness(.97);transform:translateY(-1px)}
     <div class="divider"></div>
 
     <section class="q">
-      <h2>Would you want to go on an online date with me?</h2>
-      <p class="hint">Whatever you choose is completely okay.</p>
+      <h2>Would you give us one chance?</h2>
       <div class="choices">
-        <label><input class="answer" type="radio" name="answer" value="Yes" required><span class="opt">Yes ♡</span></label>
-        <label><input class="answer" type="radio" name="answer" value="Maybe" required><span class="opt">Maybe</span></label>
-        <label><input class="answer" type="radio" name="answer" value="Let's talk first" required><span class="opt">Let's talk first</span></label>
-        <label><input class="answer" type="radio" name="answer" value="No" required><span class="opt">No</span></label>
+        <label>
+          <input id="yesAnswer" type="radio" name="answer" value="Yes" required>
+          <span class="opt">Yes ♡</span>
+        </label>
+        <label>
+          <input id="noAnswer" type="radio" name="answer" value="No" required>
+          <span class="opt">No</span>
+        </label>
       </div>
     </section>
 
-    <div id="datePanel" class="date-panel">
-      <section class="q" style="margin-top:0">
-        <h2>What kind of time together would actually feel nice?</h2>
-        <div class="choices">
-          <label><input type="checkbox" name="online_date[]" value="Video call"><span class="opt">🎥 Video call</span></label>
-          <label><input type="checkbox" name="online_date[]" value="Movie night"><span class="opt">🎬 Watch a movie</span></label>
-          <label><input type="checkbox" name="online_date[]" value="Just talk"><span class="opt">🌙 Just talk</span></label>
-          <label><input type="checkbox" name="online_date[]" value="Coffee together"><span class="opt">☕ Coffee together</span></label>
-          <label><input type="checkbox" name="online_date[]" value="Study together"><span class="opt">📚 Study together</span></label>
-          <label><input type="checkbox" name="online_date[]" value="You choose"><span class="opt">✨ You choose</span></label>
-        </div>
-      </section>
-
-      <section class="q">
-        <h2>If you already have a day in mind</h2>
-        <input id="date" type="date" name="preferred_date">
-      </section>
-
-      <section class="q grid">
-        <div>
-          <h2>Time</h2>
-          <input type="time" name="preferred_time">
-        </div>
-        <div>
-          <h2>That time is in…</h2>
-          <select name="time_zone">
-            <option value="">Choose time zone</option>
-            <option value="Japan Standard Time (JST)">Japan time (JST)</option>
-            <option value="Central Time (CT)">Texas / Central time (CT)</option>
-            <option value="Nepal Time (NPT)">Nepal time (NPT)</option>
-            <option value="Other">Another time zone</option>
-          </select>
-        </div>
-      </section>
-
-      <p class="soft">You don't have to pick a date yet. Choosing “Maybe” or “Let's talk first” is enough too.</p>
-    </div>
-
-    <section class="q">
-      <h2>Anything you want to tell me?</h2>
-      <textarea name="message" rows="4" maxlength="700" placeholder="Anything at all..."></textarea>
+    <section id="calendarBox" class="calendar">
+      <div class="q" style="margin:0">
+        <h2>Pick a day that feels right for you</h2>
+        <p style="margin:-2px 0 13px;color:#8d747d;font-size:.86rem">Choose it in your Japan calendar/time.</p>
+        <input id="preferredDate" type="date" name="preferred_date">
+      </div>
     </section>
 
     <button type="submit">Send my answer ♡</button>
-    <p class="note">No tricks, no pressure. Yes, maybe, talk first, or no — I'll respect the answer.</p>
+    <p class="note">Whatever you choose, I'll respect it.</p>
   </form>
-</section>
 </main>
 
 <script>
-const panel=document.getElementById('datePanel');
-document.querySelectorAll('.answer').forEach(r=>{
-  r.addEventListener('change',()=>{
-    panel.classList.toggle('show',r.value!=='No');
-  });
-});
-const d=document.getElementById('date');
-if(d){
-  const now=new Date();
-  const local=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().split('T')[0];
-  d.min=local;
+const yes=document.getElementById('yesAnswer');
+const no=document.getElementById('noAnswer');
+const box=document.getElementById('calendarBox');
+const date=document.getElementById('preferredDate');
+
+function update(){
+  const show=yes.checked;
+  box.classList.toggle('show',show);
+  date.required=show;
+  if(!show) date.value='';
 }
+yes.addEventListener('change',update);
+no.addEventListener('change',update);
+
+const now=new Date();
+const japan=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));
+const y=japan.getFullYear();
+const m=String(japan.getMonth()+1).padStart(2,'0');
+const d=String(japan.getDate()).padStart(2,'0');
+date.min=`${y}-${m}-${d}`;
 </script>
 </body>
 </html>
