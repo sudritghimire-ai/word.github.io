@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A small question for you 💌</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(145deg,#fff7fa,#ffe9f0);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#271d22}
+.card{width:min(680px,100%);background:#fff;border:1px solid #f0d9e1;border-radius:30px;padding:38px;box-shadow:0 25px 80px rgba(120,45,70,.13)}
+.badge{width:58px;height:58px;display:grid;place-items:center;border-radius:50%;background:#ffe3ec;font-size:30px;margin-bottom:20px}
+h1{font-size:clamp(2rem,7vw,3.8rem);line-height:1;letter-spacing:-.045em;margin:0 0 14px}
+.lead{font-size:1.08rem;line-height:1.65;color:#725b64;margin:0 0 28px}
+.q{margin:26px 0}.q h2{font-size:1rem;margin:0 0 12px}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label{cursor:pointer}input[type=radio]{position:absolute;opacity:0}
+.opt{min-height:54px;display:flex;align-items:center;justify-content:center;text-align:center;padding:13px;border:1px solid #ead3dc;border-radius:16px;background:white;transition:.16s ease}
+label:hover .opt{transform:translateY(-1px);border-color:#c45f7e}
+input:checked+.opt{background:#ffe5ed;border-color:#b94d6d;box-shadow:0 0 0 3px rgba(185,77,109,.09)}
+textarea,input[type=text],input[type=email]{width:100%;border:1px solid #ead3dc;border-radius:16px;padding:14px;font:inherit;outline:none;background:#fff}
+textarea:focus,input[type=text]:focus,input[type=email]:focus{border-color:#b94d6d;box-shadow:0 0 0 3px rgba(185,77,109,.09)}
+button{width:100%;border:0;border-radius:17px;padding:16px 18px;background:#b74365;color:#fff;font:inherit;font-weight:750;cursor:pointer;margin-top:8px}
+button:hover{filter:brightness(.97);transform:translateY(-1px)}
+.small{font-size:.82rem;color:#917982;text-align:center;line-height:1.5;margin:12px 0 0}
+.sign{margin-top:26px;color:#725b64}.honey{display:none!important}
+@media(max-width:560px){.card{padding:27px 20px;border-radius:23px}.choices{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="badge">♡</div>
+  <h1>I wanted to ask you something.</h1>
+  <p class="lead">Nothing complicated and absolutely no pressure. Just choose what you genuinely feel. Any answer is okay.</p>
+
+  <form action="https://formsubmit.co/sudritghimire@gmail.com" method="POST">
+    <input type="hidden" name="_subject" value="💌 Date site response">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="https://sudritghimire-ai.github.io/word.github.io/date/thanks.html">
+    <input type="hidden" name="_url" value="https://sudritghimire-ai.github.io/word.github.io/date/">
+    <input class="honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+
+    <section class="q">
+      <h2>Would you want to go on a date with me sometime?</h2>
+      <div class="choices">
+        <label><input type="radio" name="answer" value="Yes" required><span class="opt">Yes :)</span></label>
+        <label><input type="radio" name="answer" value="Maybe" required><span class="opt">Maybe</span></label>
+        <label><input type="radio" name="answer" value="No" required><span class="opt">No</span></label>
+        <label><input type="radio" name="answer" value="I want to talk first" required><span class="opt">Let's talk first</span></label>
+      </div>
+    </section>
+
+    <section class="q">
+      <h2>If yes or maybe, what sounds nicest?</h2>
+      <div class="choices">
+        <label><input type="radio" name="date_idea" value="Coffee"><span class="opt">☕ Coffee</span></label>
+        <label><input type="radio" name="date_idea" value="Dinner"><span class="opt">🍝 Dinner</span></label>
+        <label><input type="radio" name="date_idea" value="Walk"><span class="opt">🌙 A walk</span></label>
+        <label><input type="radio" name="date_idea" value="Surprise me"><span class="opt">✨ Surprise me</span></label>
+      </div>
+    </section>
+
+    <section class="q">
+      <h2>Your name (optional)</h2>
+      <input type="text" name="name" maxlength="80" placeholder="Name">
+    </section>
+
+    <section class="q">
+      <h2>Your email (optional, only if you want a reply there)</h2>
+      <input type="email" name="email" maxlength="120" placeholder="you@example.com">
+    </section>
+
+    <section class="q">
+      <h2>Anything you want me to know?</h2>
+      <textarea name="message" rows="4" maxlength="600" placeholder="You can say anything here..."></textarea>
+    </section>
+
+    <button type="submit">Send my answer 💌</button>
+    <p class="small">Your choices are only submitted when you press this button. There are no hidden tricks with the answer buttons.</p>
+  </form>
+  <p class="sign">— Sudrit</p>
+</main>
+</body>
+</html>
