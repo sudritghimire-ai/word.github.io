@@ -15,7 +15,7 @@ body{
     linear-gradient(145deg,#fff9fa,#fff4f1)
 }
 .card{
-  width:min(700px,100%);background:rgba(255,255,255,.95);
+  width:min(720px,100%);background:rgba(255,255,255,.95);
   border:1px solid #eedbe1;border-radius:30px;padding:40px;
   box-shadow:0 26px 80px rgba(94,46,62,.13)
 }
@@ -29,27 +29,33 @@ h1{font-size:clamp(2.7rem,8vw,5rem);letter-spacing:-.055em;line-height:.94;margi
 .story p{margin:0 0 12px}.story p:last-child{margin-bottom:0}
 .divider{height:1px;background:#f0dfe4;margin:30px 0}
 .q{margin:26px 0}.q h2{font-size:1.02rem;margin:0 0 13px}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hint{font-size:.84rem;color:#927984;margin:-4px 0 13px;line-height:1.5}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 label{cursor:pointer}
 label input{position:absolute;opacity:0;pointer-events:none}
 .opt{
-  min-height:58px;display:flex;align-items:center;justify-content:center;
+  min-height:58px;display:flex;align-items:center;justify-content:center;text-align:center;
   padding:14px;border:1px solid #ead4dc;border-radius:17px;background:#fff;
   font-weight:650;transition:.17s ease
 }
 label:hover .opt{transform:translateY(-1px);border-color:#c65f7e}
 label input:checked+.opt{background:#ffe8ee;border-color:#b94e6d;box-shadow:0 0 0 3px rgba(185,78,109,.08)}
-.calendar{
-  display:none;margin-top:24px;padding:24px;border-radius:21px;
+.panel{
+  display:none;margin-top:26px;padding:24px;border-radius:22px;
   background:#fffafb;border:1px solid #efdbe2
 }
-.calendar.show{display:block;animation:fade .22s ease}
+.panel.show{display:block;animation:fade .22s ease}
 @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.video-note{
+  padding:16px 17px;border-radius:16px;background:#fff;
+  border:1px solid #ead4dc;color:#5e4c54;line-height:1.6;margin-bottom:20px
+}
 input[type=date]{
   width:100%;padding:15px;border:1px solid #ead4dc;border-radius:15px;
   background:white;font:inherit;color:#261d21;outline:none
 }
 input[type=date]:focus{border-color:#b94e6d;box-shadow:0 0 0 3px rgba(185,78,109,.08)}
+.time-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 button{
   width:100%;border:0;border-radius:17px;padding:16px 18px;margin-top:24px;
   background:#b84464;color:white;font:inherit;font-weight:760;cursor:pointer
@@ -57,7 +63,8 @@ button{
 button:hover{filter:brightness(.97);transform:translateY(-1px)}
 .note{font-size:.82rem;line-height:1.55;color:#907781;text-align:center;margin:12px 0 0}
 @media(max-width:600px){
-  body{padding:14px}.card{padding:27px 20px;border-radius:24px}.choices{grid-template-columns:1fr}
+  body{padding:14px}.card{padding:27px 20px;border-radius:24px}
+  .choices,.time-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -85,25 +92,56 @@ button:hover{filter:brightness(.97);transform:translateY(-1px)}
     <div class="divider"></div>
 
     <section class="q">
-      <h2>Would you give us one chance?</h2>
+      <h2>Would you want to go on a date with me?</h2>
+      <p class="hint">You don't have to decide immediately. Any answer is okay.</p>
+
       <div class="choices">
         <label>
-          <input id="yesAnswer" type="radio" name="answer" value="Yes" required>
+          <input id="yesAnswer" class="answer" type="radio" name="answer" value="Yes" required>
           <span class="opt">Yes ♡</span>
         </label>
+
         <label>
-          <input id="noAnswer" type="radio" name="answer" value="No" required>
+          <input class="answer" type="radio" name="answer" value="Maybe">
+          <span class="opt">Maybe</span>
+        </label>
+
+        <label>
+          <input class="answer" type="radio" name="answer" value="Need more time">
+          <span class="opt">I need more time</span>
+        </label>
+
+        <label>
+          <input class="answer" type="radio" name="answer" value="No">
           <span class="opt">No</span>
         </label>
       </div>
     </section>
 
-    <section id="calendarBox" class="calendar">
-      <div class="q" style="margin:0">
-        <h2>Pick a day that feels right for you</h2>
-        <p style="margin:-2px 0 13px;color:#8d747d;font-size:.86rem">Choose it in your Japan calendar/time.</p>
-        <input id="preferredDate" type="date" name="preferred_date">
+    <section id="yesPanel" class="panel">
+      <div class="video-note">
+        Since we're far apart, this would be an <strong>online video-call date</strong>.
+        Nothing complicated — just some real time together.
       </div>
+
+      <section class="q" style="margin-top:0">
+        <h2>Pick a date that works for you</h2>
+        <p class="hint">This is based on your time in Japan.</p>
+        <input id="preferredDate" type="date" name="preferred_date">
+      </section>
+
+      <section class="q">
+        <h2>Pick a time</h2>
+        <p class="hint">All options are Japan Standard Time (JST).</p>
+        <div class="time-grid">
+          <label><input class="timeOption" type="radio" name="preferred_time_jst" value="6:00 PM JST"><span class="opt">6:00 PM</span></label>
+          <label><input class="timeOption" type="radio" name="preferred_time_jst" value="7:00 PM JST"><span class="opt">7:00 PM</span></label>
+          <label><input class="timeOption" type="radio" name="preferred_time_jst" value="8:00 PM JST"><span class="opt">8:00 PM</span></label>
+          <label><input class="timeOption" type="radio" name="preferred_time_jst" value="9:00 PM JST"><span class="opt">9:00 PM</span></label>
+          <label><input class="timeOption" type="radio" name="preferred_time_jst" value="10:00 PM JST"><span class="opt">10:00 PM</span></label>
+          <label><input class="timeOption" type="radio" name="preferred_time_jst" value="Another time"><span class="opt">Another time</span></label>
+        </div>
+      </section>
     </section>
 
     <button type="submit">Send my answer ♡</button>
@@ -113,18 +151,24 @@ button:hover{filter:brightness(.97);transform:translateY(-1px)}
 
 <script>
 const yes=document.getElementById('yesAnswer');
-const no=document.getElementById('noAnswer');
-const box=document.getElementById('calendarBox');
+const panel=document.getElementById('yesPanel');
 const date=document.getElementById('preferredDate');
+const timeOptions=[...document.querySelectorAll('.timeOption')];
+const answers=[...document.querySelectorAll('.answer')];
 
-function update(){
+function refresh(){
   const show=yes.checked;
-  box.classList.toggle('show',show);
+  panel.classList.toggle('show',show);
   date.required=show;
-  if(!show) date.value='';
+  timeOptions.forEach(x=>x.required=false);
+  if(show && timeOptions.length) timeOptions[0].required=true;
+
+  if(!show){
+    date.value='';
+    timeOptions.forEach(x=>x.checked=false);
+  }
 }
-yes.addEventListener('change',update);
-no.addEventListener('change',update);
+answers.forEach(a=>a.addEventListener('change',refresh));
 
 const now=new Date();
 const japan=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));
